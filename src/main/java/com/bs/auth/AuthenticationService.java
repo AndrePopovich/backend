@@ -5,7 +5,7 @@ import com.bs.model.Role;
 import com.bs.model.User;
 import com.bs.payload.request.AuthenticationRequest;
 import com.bs.payload.request.RegisterRequest;
-import com.bs.payload.responce.AuthenticationResponce;
+import com.bs.payload.response.AuthenticationResponse;
 import com.bs.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,7 +22,7 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
-    public AuthenticationResponce register(RegisterRequest request) {
+    public AuthenticationResponse register(RegisterRequest request) {
         var user = User.builder()
                 .firstname(request.getFirstname())
                 .lastname(request.getLastname())
@@ -34,10 +34,10 @@ public class AuthenticationService {
                 .build();
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
-        return AuthenticationResponce.builder().token(jwtToken).build();
+        return AuthenticationResponse.builder().token(jwtToken).build();
     }
 
-    public AuthenticationResponce authenticate(AuthenticationRequest request) {
+    public AuthenticationResponse authenticate(AuthenticationRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
@@ -46,6 +46,6 @@ public class AuthenticationService {
         );
         var user = userRepository.findByEmail(request.getEmail()).orElseThrow();
         var jwtToken = jwtService.generateToken(user);
-        return AuthenticationResponce.builder().token(jwtToken).build();
+        return AuthenticationResponse.builder().token(jwtToken).build();
     }
 }

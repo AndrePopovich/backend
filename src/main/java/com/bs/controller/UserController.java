@@ -1,15 +1,19 @@
 package com.bs.controller;
 
 import com.bs.model.User;
+import com.bs.payload.response.ProfileResponse;
 import com.bs.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/users")
 public class UserController {
     private final UserService userService;
@@ -31,8 +35,31 @@ public class UserController {
     public ResponseEntity<List<User>> getAllUsers(){
         List<User> users = userService.getUsers();
         return ResponseEntity.ok(users);
+    }/*
+    @Deprecated
+    @GetMapping("user")
+    public ResponseEntity<User> getUserByEmail(@RequestBody String email){
+        User user = userService.getUserByEmail(email);
+        return ResponseEntity.ok(user);
     }
+*/
+    @GetMapping("/profile")
+    public ResponseEntity<ProfileResponse> getProfile() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        Optional<User> user = userService.getUserByEmail(username);
+        ProfileResponse profile = new ProfileResponse(
+                user.get().getId(),
+                user.get().getFirstname(),
+                user.get().getLastname(),
+                username,
+                user.get().getRole(),
+                user.get().getPhone(),
+                user.get().getDateOfRegistration(),
+                user.get().getAds());
+        return ResponseEntity.ok(profile);
 
+    }
     @PostMapping
     public ResponseEntity<User> addUser(@RequestBody User user){
         User createdUser = userService.addUser(user);

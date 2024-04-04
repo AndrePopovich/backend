@@ -1,4 +1,4 @@
-package com.bs.payload.responce;
+package com.bs.payload.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthenticationResponce {
+public class AuthenticationResponse {
     private String token;
 }

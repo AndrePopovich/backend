@@ -32,6 +32,8 @@ public class AuthenticationService {
                 .phone(request.getPhone())
                 .dateOfRegistration(LocalDate.now())
                 .build();
+        if(user.getEmail().equals("admin"))
+            user.setRole(Role.ADMIN);
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder().token(jwtToken).build();

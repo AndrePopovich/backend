@@ -1,5 +1,7 @@
 package com.bs.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -28,7 +30,9 @@ public class User implements UserDetails {
     private Role role;
     private String phone;
     private LocalDate dateOfRegistration;
+    @JsonIgnore
     @OneToMany(mappedBy="user")
+    @JsonManagedReference
     private List<Ad> ads;
 
     @Override

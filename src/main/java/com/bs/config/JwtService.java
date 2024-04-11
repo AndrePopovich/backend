@@ -36,9 +36,26 @@ public class JwtService {
     public String generateToken(UserDetails userDetails){
         return generateToken(new HashMap<>(), userDetails);
     }
-    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails){
+    /*public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails){
         return Jwts
                 .builder()
+                .setClaims(extraClaims)
+                .setSubject(userDetails.getUsername())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
+                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+                .compact();
+    }*/
+    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+
+        String userRole = userDetails.getAuthorities().stream()
+                .findFirst()
+                .map(Object::toString)
+                .orElse("USER");
+
+        extraClaims.put("role", userRole);
+
+        return Jwts.builder()
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))

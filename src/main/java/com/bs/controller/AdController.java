@@ -31,13 +31,13 @@ public class AdController {
         List<Ad> ads = adService.getAds();
         return ResponseEntity.ok(ads);
     }
-
+/*
     @PostMapping
     public ResponseEntity<Ad> addAd(@RequestBody Ad ad){
-        Ad createdAd = adService.addAd(ad);
+        Ad createdAd = adService.addAd(ad,);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdAd);
     }
-
+*/
     @PutMapping("/{id}")
     public ResponseEntity<Ad> updateAd(@PathVariable Long id, @RequestBody Ad ad){
         Ad existingAd = adService.getAdById(id);

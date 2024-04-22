@@ -32,7 +32,7 @@ public class AuthenticationService {
                 .phone(request.getPhone())
                 .dateOfRegistration(LocalDate.now())
                 .build();
-        if(user.getEmail().equals("admin"))
+        if(user.getEmail().equals("admin@buysell.com"))
             user.setRole(Role.ADMIN);
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);

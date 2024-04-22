@@ -14,4 +14,5 @@ public interface UserService {
     public List<User> getUsers();
     public Optional<User> getUserByEmail(String email);
     public void deleteUser(Long id);
+    boolean isExistEmail(String email);
 }

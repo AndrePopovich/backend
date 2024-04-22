@@ -2,8 +2,10 @@ package com.bs.controller;
 
 import com.bs.model.Category;
 import com.bs.model.City;
+import com.bs.model.User;
 import com.bs.service.CategoryService;
 import com.bs.service.CityService;
+import com.bs.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,10 +18,28 @@ public class AdminController {
 
     private final CategoryService categoryService;
     private final CityService cityService;
+    private final UserService userService;
 
-    public AdminController(CategoryService categoryService, CityService cityService){
+
+    public AdminController(CategoryService categoryService, CityService cityService, UserService userService){
         this.categoryService = categoryService;
         this.cityService = cityService;
+        this.userService = userService;
+    }
+    @GetMapping("/users")
+    public ResponseEntity<List<User>> getAllUsers(){
+        List<User> users = userService.getUsers();
+        return ResponseEntity.ok(users);
+    }
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id){
+        User existingUser = userService.getUserById(id);
+        if(existingUser != null){
+            userService.deleteUser(id);
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
     @GetMapping("/cities/{id}")
     public ResponseEntity<City> getCityById(@PathVariable Long id){

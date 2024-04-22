@@ -33,7 +33,7 @@ public class SecurityConfig {
             )*/
             .csrf(CsrfConfigurer::disable)
             .authorizeRequests()
-                .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/api/auth/**", "/api/search/**").permitAll()
                 .requestMatchers("/api/admin/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and()

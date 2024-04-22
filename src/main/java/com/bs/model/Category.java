@@ -17,7 +17,7 @@ public class Category {
     private long id;
     private String name;
     @JsonIgnore
-    @OneToMany(mappedBy = "category")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "category")
     @JsonManagedReference
     private List<Ad> ads;
 

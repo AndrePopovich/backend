@@ -17,7 +17,7 @@ public class City {
     private long id;
     private String name;
     @JsonIgnore
-    @OneToMany(mappedBy="city")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy="city")
     @JsonManagedReference
     private List<Ad> ads;
 

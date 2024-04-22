@@ -44,15 +44,10 @@ public class UserServiceImpl implements UserService/*, UserDetailsService*/ {
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
-/*
+
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByEmail(username)
-                .map(user -> new org.springframework.security.core.userdetails.User(
-                        user.getUsername(),
-                        user.getPassword(),
-                        Collections.singleton(user.getRole())
-                ))
-                .orElseThrow(() -> new UsernameNotFoundException("Failed to retrieve user: " + username));
-    }*/
+    public boolean isExistEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
 }

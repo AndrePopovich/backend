@@ -26,24 +26,21 @@ public class Ad {
 
     @ManyToOne
     @JoinColumn(name="user_id")
-    @JsonBackReference
     private User user;
 
     @ManyToOne
     @JoinColumn(name="city_id")
-    @JsonBackReference
     private City city;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    @JsonBackReference
     private Category category;
 
     private BigDecimal price;
     private boolean isActive;
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "ad")
     @JsonManagedReference
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "ad")
     private List<Image> images = new ArrayList<>();
     private Long previewImageId;
     private LocalDateTime dateOfCreated;
@@ -58,4 +55,5 @@ public class Ad {
         image.setAd(this);
         images.add(image);
     }
+
 }

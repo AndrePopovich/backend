@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://dpg-cojpt0md3nmc73c07ihg-a/buy_sell_db_bwisdpg-cojpt0md3nmc73c07ihg-a/buy_sell_db_bwis
-    username: buysellshop
-    password: TtyPOixawbxm7WC26dQacp8SQ2TqtDLO
+    url: jdbc:postgresql://localhost:5432/buysell_db
+    username: postgres
+    password: 1234
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
